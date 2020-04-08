@@ -7,17 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5E47497A243DBC2E00277614 /* GNImageZoomCollectionViewController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E474970243DBC2E00277614 /* GNImageZoomCollectionViewController.framework */; };
-		5E47497F243DBC2E00277614 /* GNImageZoomCollectionViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E47497E243DBC2E00277614 /* GNImageZoomCollectionViewControllerTests.swift */; };
-		5E474981243DBC2E00277614 /* GNImageZoomCollectionViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E474973243DBC2E00277614 /* GNImageZoomCollectionViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5E47497A243DBC2E00277614 /* GNImageCollection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E474970243DBC2E00277614 /* GNImageCollection.framework */; };
+		5E47497F243DBC2E00277614 /* GNImageCollectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E47497E243DBC2E00277614 /* GNImageCollectionTests.swift */; };
+		5E474981243DBC2E00277614 /* GNImageCollection.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E474973243DBC2E00277614 /* GNImageCollection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5E474991243DBDB800277614 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E474990243DBDB800277614 /* AppDelegate.swift */; };
 		5E474993243DBDB800277614 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E474992243DBDB800277614 /* SceneDelegate.swift */; };
-		5E474995243DBDB800277614 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E474994243DBDB800277614 /* ContentView.swift */; };
 		5E474997243DBDBC00277614 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5E474996243DBDBC00277614 /* Assets.xcassets */; };
-		5E47499A243DBDBC00277614 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5E474999243DBDBC00277614 /* Preview Assets.xcassets */; };
 		5E47499D243DBDBC00277614 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5E47499B243DBDBC00277614 /* LaunchScreen.storyboard */; };
-		5E4749A8243DBDBD00277614 /* DemoViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4749A7243DBDBD00277614 /* DemoViewControllerTests.swift */; };
-		5E4749B3243DBDBD00277614 /* DemoViewControllerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4749B2243DBDBD00277614 /* DemoViewControllerUITests.swift */; };
+		5E4749BF243DC7A400277614 /* GNImageCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4749BE243DC7A400277614 /* GNImageCollection.swift */; };
+		5E4749C1243DCF0C00277614 /* DemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4749C0243DCF0C00277614 /* DemoViewController.swift */; };
+		5E4749D2243DEAED00277614 /* GNImageCollection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E474970243DBC2E00277614 /* GNImageCollection.framework */; };
+		5E4749D3243DEAED00277614 /* GNImageCollection.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5E474970243DBC2E00277614 /* GNImageCollection.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,43 +28,44 @@
 			remoteGlobalIDString = 5E47496F243DBC2E00277614;
 			remoteInfo = GNImageZoomCollectionViewController;
 		};
-		5E4749A4243DBDBC00277614 /* PBXContainerItemProxy */ = {
+		5E4749D4243DEAED00277614 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5E474967243DBC2E00277614 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 5E47498D243DBDB800277614;
-			remoteInfo = DemoViewController;
-		};
-		5E4749AF243DBDBD00277614 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5E474967243DBC2E00277614 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 5E47498D243DBDB800277614;
-			remoteInfo = DemoViewController;
+			remoteGlobalIDString = 5E47496F243DBC2E00277614;
+			remoteInfo = GNImageCollection;
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		5E4749D6243DEAEE00277614 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				5E4749D3243DEAED00277614 /* GNImageCollection.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		5E474970243DBC2E00277614 /* GNImageZoomCollectionViewController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GNImageZoomCollectionViewController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5E474973243DBC2E00277614 /* GNImageZoomCollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GNImageZoomCollectionViewController.h; sourceTree = "<group>"; };
+		5E474970243DBC2E00277614 /* GNImageCollection.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GNImageCollection.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5E474973243DBC2E00277614 /* GNImageCollection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GNImageCollection.h; sourceTree = "<group>"; };
 		5E474974243DBC2E00277614 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5E474979243DBC2E00277614 /* GNImageZoomCollectionViewControllerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GNImageZoomCollectionViewControllerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		5E47497E243DBC2E00277614 /* GNImageZoomCollectionViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GNImageZoomCollectionViewControllerTests.swift; sourceTree = "<group>"; };
+		5E474979243DBC2E00277614 /* GNImageCollectionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GNImageCollectionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5E47497E243DBC2E00277614 /* GNImageCollectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GNImageCollectionTests.swift; sourceTree = "<group>"; };
 		5E474980243DBC2E00277614 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5E47498E243DBDB800277614 /* DemoViewController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DemoViewController.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5E47498E243DBDB800277614 /* DemoProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DemoProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E474990243DBDB800277614 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5E474992243DBDB800277614 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		5E474994243DBDB800277614 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		5E474996243DBDBC00277614 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		5E474999243DBDBC00277614 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		5E47499C243DBDBC00277614 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5E47499E243DBDBC00277614 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5E4749A3243DBDBC00277614 /* DemoViewControllerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DemoViewControllerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		5E4749A7243DBDBD00277614 /* DemoViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoViewControllerTests.swift; sourceTree = "<group>"; };
-		5E4749A9243DBDBD00277614 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5E4749AE243DBDBD00277614 /* DemoViewControllerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DemoViewControllerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		5E4749B2243DBDBD00277614 /* DemoViewControllerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoViewControllerUITests.swift; sourceTree = "<group>"; };
-		5E4749B4243DBDBD00277614 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5E4749BE243DC7A400277614 /* GNImageCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GNImageCollection.swift; sourceTree = "<group>"; };
+		5E4749C0243DCF0C00277614 /* DemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,7 +80,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5E47497A243DBC2E00277614 /* GNImageZoomCollectionViewController.framework in Frameworks */,
+				5E47497A243DBC2E00277614 /* GNImageCollection.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -87,20 +88,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5E4749A0243DBDBC00277614 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5E4749AB243DBDBD00277614 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				5E4749D2243DEAED00277614 /* GNImageCollection.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -110,83 +98,61 @@
 		5E474966243DBC2E00277614 = {
 			isa = PBXGroup;
 			children = (
-				5E474972243DBC2E00277614 /* GNImageZoomCollectionViewController */,
-				5E47497D243DBC2E00277614 /* GNImageZoomCollectionViewControllerTests */,
-				5E47498F243DBDB800277614 /* DemoViewController */,
-				5E4749A6243DBDBD00277614 /* DemoViewControllerTests */,
-				5E4749B1243DBDBD00277614 /* DemoViewControllerUITests */,
+				5E474972243DBC2E00277614 /* GNImageCollection */,
+				5E47497D243DBC2E00277614 /* GNImageCollectionTests */,
+				5E47498F243DBDB800277614 /* DemoProject */,
 				5E474971243DBC2E00277614 /* Products */,
+				5E4749C2243DDCB900277614 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
 		5E474971243DBC2E00277614 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				5E474970243DBC2E00277614 /* GNImageZoomCollectionViewController.framework */,
-				5E474979243DBC2E00277614 /* GNImageZoomCollectionViewControllerTests.xctest */,
-				5E47498E243DBDB800277614 /* DemoViewController.app */,
-				5E4749A3243DBDBC00277614 /* DemoViewControllerTests.xctest */,
-				5E4749AE243DBDBD00277614 /* DemoViewControllerUITests.xctest */,
+				5E474970243DBC2E00277614 /* GNImageCollection.framework */,
+				5E474979243DBC2E00277614 /* GNImageCollectionTests.xctest */,
+				5E47498E243DBDB800277614 /* DemoProject.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		5E474972243DBC2E00277614 /* GNImageZoomCollectionViewController */ = {
+		5E474972243DBC2E00277614 /* GNImageCollection */ = {
 			isa = PBXGroup;
 			children = (
-				5E474973243DBC2E00277614 /* GNImageZoomCollectionViewController.h */,
+				5E474973243DBC2E00277614 /* GNImageCollection.h */,
 				5E474974243DBC2E00277614 /* Info.plist */,
+				5E4749BE243DC7A400277614 /* GNImageCollection.swift */,
 			);
-			path = GNImageZoomCollectionViewController;
+			path = GNImageCollection;
 			sourceTree = "<group>";
 		};
-		5E47497D243DBC2E00277614 /* GNImageZoomCollectionViewControllerTests */ = {
+		5E47497D243DBC2E00277614 /* GNImageCollectionTests */ = {
 			isa = PBXGroup;
 			children = (
-				5E47497E243DBC2E00277614 /* GNImageZoomCollectionViewControllerTests.swift */,
+				5E47497E243DBC2E00277614 /* GNImageCollectionTests.swift */,
 				5E474980243DBC2E00277614 /* Info.plist */,
 			);
-			path = GNImageZoomCollectionViewControllerTests;
+			path = GNImageCollectionTests;
 			sourceTree = "<group>";
 		};
-		5E47498F243DBDB800277614 /* DemoViewController */ = {
+		5E47498F243DBDB800277614 /* DemoProject */ = {
 			isa = PBXGroup;
 			children = (
 				5E474990243DBDB800277614 /* AppDelegate.swift */,
 				5E474992243DBDB800277614 /* SceneDelegate.swift */,
-				5E474994243DBDB800277614 /* ContentView.swift */,
+				5E4749C0243DCF0C00277614 /* DemoViewController.swift */,
 				5E474996243DBDBC00277614 /* Assets.xcassets */,
 				5E47499B243DBDBC00277614 /* LaunchScreen.storyboard */,
 				5E47499E243DBDBC00277614 /* Info.plist */,
-				5E474998243DBDBC00277614 /* Preview Content */,
 			);
-			path = DemoViewController;
+			path = DemoProject;
 			sourceTree = "<group>";
 		};
-		5E474998243DBDBC00277614 /* Preview Content */ = {
+		5E4749C2243DDCB900277614 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				5E474999243DBDBC00277614 /* Preview Assets.xcassets */,
 			);
-			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		5E4749A6243DBDBD00277614 /* DemoViewControllerTests */ = {
-			isa = PBXGroup;
-			children = (
-				5E4749A7243DBDBD00277614 /* DemoViewControllerTests.swift */,
-				5E4749A9243DBDBD00277614 /* Info.plist */,
-			);
-			path = DemoViewControllerTests;
-			sourceTree = "<group>";
-		};
-		5E4749B1243DBDBD00277614 /* DemoViewControllerUITests */ = {
-			isa = PBXGroup;
-			children = (
-				5E4749B2243DBDBD00277614 /* DemoViewControllerUITests.swift */,
-				5E4749B4243DBDBD00277614 /* Info.plist */,
-			);
-			path = DemoViewControllerUITests;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -196,16 +162,16 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5E474981243DBC2E00277614 /* GNImageZoomCollectionViewController.h in Headers */,
+				5E474981243DBC2E00277614 /* GNImageCollection.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		5E47496F243DBC2E00277614 /* GNImageZoomCollectionViewController */ = {
+		5E47496F243DBC2E00277614 /* GNImageCollection */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5E474984243DBC2E00277614 /* Build configuration list for PBXNativeTarget "GNImageZoomCollectionViewController" */;
+			buildConfigurationList = 5E474984243DBC2E00277614 /* Build configuration list for PBXNativeTarget "GNImageCollection" */;
 			buildPhases = (
 				5E47496B243DBC2E00277614 /* Headers */,
 				5E47496C243DBC2E00277614 /* Sources */,
@@ -216,14 +182,14 @@
 			);
 			dependencies = (
 			);
-			name = GNImageZoomCollectionViewController;
+			name = GNImageCollection;
 			productName = GNImageZoomCollectionViewController;
-			productReference = 5E474970243DBC2E00277614 /* GNImageZoomCollectionViewController.framework */;
+			productReference = 5E474970243DBC2E00277614 /* GNImageCollection.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		5E474978243DBC2E00277614 /* GNImageZoomCollectionViewControllerTests */ = {
+		5E474978243DBC2E00277614 /* GNImageCollectionTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5E474987243DBC2E00277614 /* Build configuration list for PBXNativeTarget "GNImageZoomCollectionViewControllerTests" */;
+			buildConfigurationList = 5E474987243DBC2E00277614 /* Build configuration list for PBXNativeTarget "GNImageCollectionTests" */;
 			buildPhases = (
 				5E474975243DBC2E00277614 /* Sources */,
 				5E474976243DBC2E00277614 /* Frameworks */,
@@ -234,63 +200,29 @@
 			dependencies = (
 				5E47497C243DBC2E00277614 /* PBXTargetDependency */,
 			);
-			name = GNImageZoomCollectionViewControllerTests;
+			name = GNImageCollectionTests;
 			productName = GNImageZoomCollectionViewControllerTests;
-			productReference = 5E474979243DBC2E00277614 /* GNImageZoomCollectionViewControllerTests.xctest */;
+			productReference = 5E474979243DBC2E00277614 /* GNImageCollectionTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		5E47498D243DBDB800277614 /* DemoViewController */ = {
+		5E47498D243DBDB800277614 /* DemoProject */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5E4749B5243DBDBD00277614 /* Build configuration list for PBXNativeTarget "DemoViewController" */;
+			buildConfigurationList = 5E4749B5243DBDBD00277614 /* Build configuration list for PBXNativeTarget "DemoProject" */;
 			buildPhases = (
 				5E47498A243DBDB800277614 /* Sources */,
 				5E47498B243DBDB800277614 /* Frameworks */,
 				5E47498C243DBDB800277614 /* Resources */,
+				5E4749D6243DEAEE00277614 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				5E4749D5243DEAED00277614 /* PBXTargetDependency */,
 			);
-			name = DemoViewController;
+			name = DemoProject;
 			productName = DemoViewController;
-			productReference = 5E47498E243DBDB800277614 /* DemoViewController.app */;
+			productReference = 5E47498E243DBDB800277614 /* DemoProject.app */;
 			productType = "com.apple.product-type.application";
-		};
-		5E4749A2243DBDBC00277614 /* DemoViewControllerTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 5E4749B8243DBDBD00277614 /* Build configuration list for PBXNativeTarget "DemoViewControllerTests" */;
-			buildPhases = (
-				5E47499F243DBDBC00277614 /* Sources */,
-				5E4749A0243DBDBC00277614 /* Frameworks */,
-				5E4749A1243DBDBC00277614 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				5E4749A5243DBDBC00277614 /* PBXTargetDependency */,
-			);
-			name = DemoViewControllerTests;
-			productName = DemoViewControllerTests;
-			productReference = 5E4749A3243DBDBC00277614 /* DemoViewControllerTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		5E4749AD243DBDBD00277614 /* DemoViewControllerUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 5E4749BB243DBDBD00277614 /* Build configuration list for PBXNativeTarget "DemoViewControllerUITests" */;
-			buildPhases = (
-				5E4749AA243DBDBD00277614 /* Sources */,
-				5E4749AB243DBDBD00277614 /* Frameworks */,
-				5E4749AC243DBDBD00277614 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				5E4749B0243DBDBD00277614 /* PBXTargetDependency */,
-			);
-			name = DemoViewControllerUITests;
-			productName = DemoViewControllerUITests;
-			productReference = 5E4749AE243DBDBD00277614 /* DemoViewControllerUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
 
@@ -304,6 +236,7 @@
 				TargetAttributes = {
 					5E47496F243DBC2E00277614 = {
 						CreatedOnToolsVersion = 11.3.1;
+						LastSwiftMigration = 1130;
 					};
 					5E474978243DBC2E00277614 = {
 						CreatedOnToolsVersion = 11.3.1;
@@ -311,17 +244,9 @@
 					5E47498D243DBDB800277614 = {
 						CreatedOnToolsVersion = 11.3.1;
 					};
-					5E4749A2243DBDBC00277614 = {
-						CreatedOnToolsVersion = 11.3.1;
-						TestTargetID = 5E47498D243DBDB800277614;
-					};
-					5E4749AD243DBDBD00277614 = {
-						CreatedOnToolsVersion = 11.3.1;
-						TestTargetID = 5E47498D243DBDB800277614;
-					};
 				};
 			};
-			buildConfigurationList = 5E47496A243DBC2E00277614 /* Build configuration list for PBXProject "GNImageZoomCollectionViewController" */;
+			buildConfigurationList = 5E47496A243DBC2E00277614 /* Build configuration list for PBXProject "GNImageCollection" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -334,11 +259,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				5E47496F243DBC2E00277614 /* GNImageZoomCollectionViewController */,
-				5E474978243DBC2E00277614 /* GNImageZoomCollectionViewControllerTests */,
-				5E47498D243DBDB800277614 /* DemoViewController */,
-				5E4749A2243DBDBC00277614 /* DemoViewControllerTests */,
-				5E4749AD243DBDBD00277614 /* DemoViewControllerUITests */,
+				5E47496F243DBC2E00277614 /* GNImageCollection */,
+				5E474978243DBC2E00277614 /* GNImageCollectionTests */,
+				5E47498D243DBDB800277614 /* DemoProject */,
 			);
 		};
 /* End PBXProject section */
@@ -363,22 +286,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5E47499D243DBDBC00277614 /* LaunchScreen.storyboard in Resources */,
-				5E47499A243DBDBC00277614 /* Preview Assets.xcassets in Resources */,
 				5E474997243DBDBC00277614 /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5E4749A1243DBDBC00277614 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5E4749AC243DBDBD00277614 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -389,6 +297,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5E4749BF243DC7A400277614 /* GNImageCollection.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -396,7 +305,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5E47497F243DBC2E00277614 /* GNImageZoomCollectionViewControllerTests.swift in Sources */,
+				5E47497F243DBC2E00277614 /* GNImageCollectionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -404,25 +313,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5E4749C1243DCF0C00277614 /* DemoViewController.swift in Sources */,
 				5E474991243DBDB800277614 /* AppDelegate.swift in Sources */,
 				5E474993243DBDB800277614 /* SceneDelegate.swift in Sources */,
-				5E474995243DBDB800277614 /* ContentView.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5E47499F243DBDBC00277614 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				5E4749A8243DBDBD00277614 /* DemoViewControllerTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5E4749AA243DBDBD00277614 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				5E4749B3243DBDBD00277614 /* DemoViewControllerUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -431,18 +324,13 @@
 /* Begin PBXTargetDependency section */
 		5E47497C243DBC2E00277614 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 5E47496F243DBC2E00277614 /* GNImageZoomCollectionViewController */;
+			target = 5E47496F243DBC2E00277614 /* GNImageCollection */;
 			targetProxy = 5E47497B243DBC2E00277614 /* PBXContainerItemProxy */;
 		};
-		5E4749A5243DBDBC00277614 /* PBXTargetDependency */ = {
+		5E4749D5243DEAED00277614 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 5E47498D243DBDB800277614 /* DemoViewController */;
-			targetProxy = 5E4749A4243DBDBC00277614 /* PBXContainerItemProxy */;
-		};
-		5E4749B0243DBDBD00277614 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 5E47498D243DBDB800277614 /* DemoViewController */;
-			targetProxy = 5E4749AF243DBDBD00277614 /* PBXContainerItemProxy */;
+			target = 5E47496F243DBC2E00277614 /* GNImageCollection */;
+			targetProxy = 5E4749D4243DEAED00277614 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -509,7 +397,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -566,7 +454,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -581,22 +469,24 @@
 		5E474985243DBC2E00277614 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = GNImageZoomCollectionViewController/Info.plist;
+				INFOPLIST_FILE = GNImageCollection/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = nicolaouG.GNImageZoomCollectionViewController;
+				PRODUCT_BUNDLE_IDENTIFIER = nicolaouG.GNImageCollection;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -605,19 +495,20 @@
 		5E474986243DBC2E00277614 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = GNImageZoomCollectionViewController/Info.plist;
+				INFOPLIST_FILE = GNImageCollection/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = nicolaouG.GNImageZoomCollectionViewController;
+				PRODUCT_BUNDLE_IDENTIFIER = nicolaouG.GNImageCollection;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
@@ -629,14 +520,15 @@
 		5E474988243DBC2E00277614 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = GNImageZoomCollectionViewControllerTests/Info.plist;
+				INFOPLIST_FILE = GNImageCollectionTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = nicolaouG.GNImageZoomCollectionViewControllerTests;
+				PRODUCT_BUNDLE_IDENTIFIER = nicolaouG.GNImageCollectionTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -646,14 +538,15 @@
 		5E474989243DBC2E00277614 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = GNImageZoomCollectionViewControllerTests/Info.plist;
+				INFOPLIST_FILE = GNImageCollectionTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = nicolaouG.GNImageZoomCollectionViewControllerTests;
+				PRODUCT_BUNDLE_IDENTIFIER = nicolaouG.GNImageCollectionTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -665,9 +558,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"DemoViewController/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = DemoViewController/Info.plist;
+				INFOPLIST_FILE = DemoProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -684,9 +577,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"DemoViewController/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = DemoViewController/Info.plist;
+				INFOPLIST_FILE = DemoProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -698,90 +591,10 @@
 			};
 			name = Release;
 		};
-		5E4749B9243DBDBD00277614 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = DemoViewControllerTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = nicolaouG.DemoViewControllerTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DemoViewController.app/DemoViewController";
-			};
-			name = Debug;
-		};
-		5E4749BA243DBDBD00277614 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = DemoViewControllerTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = nicolaouG.DemoViewControllerTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DemoViewController.app/DemoViewController";
-			};
-			name = Release;
-		};
-		5E4749BC243DBDBD00277614 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = DemoViewControllerUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = nicolaouG.DemoViewControllerUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = DemoViewController;
-			};
-			name = Debug;
-		};
-		5E4749BD243DBDBD00277614 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = DemoViewControllerUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = nicolaouG.DemoViewControllerUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = DemoViewController;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		5E47496A243DBC2E00277614 /* Build configuration list for PBXProject "GNImageZoomCollectionViewController" */ = {
+		5E47496A243DBC2E00277614 /* Build configuration list for PBXProject "GNImageCollection" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5E474982243DBC2E00277614 /* Debug */,
@@ -790,7 +603,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5E474984243DBC2E00277614 /* Build configuration list for PBXNativeTarget "GNImageZoomCollectionViewController" */ = {
+		5E474984243DBC2E00277614 /* Build configuration list for PBXNativeTarget "GNImageCollection" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5E474985243DBC2E00277614 /* Debug */,
@@ -799,7 +612,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5E474987243DBC2E00277614 /* Build configuration list for PBXNativeTarget "GNImageZoomCollectionViewControllerTests" */ = {
+		5E474987243DBC2E00277614 /* Build configuration list for PBXNativeTarget "GNImageCollectionTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5E474988243DBC2E00277614 /* Debug */,
@@ -808,29 +621,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5E4749B5243DBDBD00277614 /* Build configuration list for PBXNativeTarget "DemoViewController" */ = {
+		5E4749B5243DBDBD00277614 /* Build configuration list for PBXNativeTarget "DemoProject" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5E4749B6243DBDBD00277614 /* Debug */,
 				5E4749B7243DBDBD00277614 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		5E4749B8243DBDBD00277614 /* Build configuration list for PBXNativeTarget "DemoViewControllerTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				5E4749B9243DBDBD00277614 /* Debug */,
-				5E4749BA243DBDBD00277614 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		5E4749BB243DBDBD00277614 /* Build configuration list for PBXNativeTarget "DemoViewControllerUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				5E4749BC243DBDBD00277614 /* Debug */,
-				5E4749BD243DBDBD00277614 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

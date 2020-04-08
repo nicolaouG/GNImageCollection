@@ -1,15 +1,15 @@
 //
-//  DemoViewControllerTests.swift
-//  DemoViewControllerTests
+//  GNImageCollectionTests.swift
+//  GNImageCollectionTests
 //
 //  Created by george on 08/04/2020.
 //  Copyright © 2020 George Nicolaou. All rights reserved.
 //
 
 import XCTest
-@testable import DemoViewController
+@testable import GNImageCollection
 
-class DemoViewControllerTests: XCTestCase {
+class GNImageCollectionTests: XCTestCase {
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
