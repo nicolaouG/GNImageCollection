@@ -75,12 +75,6 @@ public class GNImageCollection: UICollectionViewController, UICollectionViewDele
         return s
     }()
     
-    private lazy var currentImageTracker: UIView = {
-        let v = UIView()
-        v.backgroundColor = .systemBlue
-        return v
-    }()
-    
     private lazy var longPressGesture: UILongPressGestureRecognizer = {
         let g = UILongPressGestureRecognizer(target: self, action: #selector(longPressAction))
         return g
@@ -96,25 +90,25 @@ public class GNImageCollection: UICollectionViewController, UICollectionViewDele
     
     public var currentImageTrackerColor: UIColor = .systemBlue {
         didSet {
-            currentImageTracker.backgroundColor = currentImageTrackerColor
+            recolorImageTracker()
         }
     }
     
     public var defaultImageTrackerColor: UIColor = .systemGray {
         didSet {
-            currentImageTracker.backgroundColor = defaultImageTrackerColor
+            recolorImageTracker()
         }
     }
     
     public var shouldTrackImages: Bool = true {
         didSet {
-            currentImageTracker.isHidden = shouldTrackImages
+            imagesTrackerStack.isHidden = !shouldTrackImages
         }
     }
     
     private let trackerSize: CGFloat = 8
     
-    
+        
     public init(images: [UIImage]) {
         self.images = images
         super.init(collectionViewLayout: flowLayout)
@@ -157,7 +151,12 @@ public class GNImageCollection: UICollectionViewController, UICollectionViewDele
         }, completion: { _ in })
     }
     
-    
+    public func getCollectionView(_ requestingController: UIViewController) -> UIView? {
+        flowLayout.itemSize = collectionCellSize()
+        requestingController.addChild(self)
+        didMove(toParent: requestingController)
+        return view
+    }
         
     private func addCloseButton() {
         view.addSubview(closeButton)
@@ -223,6 +222,18 @@ public class GNImageCollection: UICollectionViewController, UICollectionViewDele
         }
     }
     
+    private func recolorImageTracker() {
+        let selectedSubviewIndex = indexOfVisibleItem()
+        for (i, subV) in imagesTrackerStack.arrangedSubviews.enumerated() {
+            if i == selectedSubviewIndex {
+                subV.backgroundColor = currentImageTrackerColor
+            } else {
+                subV.backgroundColor = defaultImageTrackerColor
+            }
+        }
+
+    }
+    
     private func areTooManySubviews() -> Bool {
         let screenWidth = Int(view.bounds.width)
         let numOfImages = images?.count ?? 0
@@ -283,7 +294,7 @@ public class GNImageCollection: UICollectionViewController, UICollectionViewDele
         collectionView.backgroundView = emptyMessageLabel
     }
     
-    private func indexOfVisibleItem() -> Int {
+    public func indexOfVisibleItem() -> Int {
         guard collectionView != nil else { return 0 }
         let itemWidth = collectionCellSize().width
         let offset = collectionView.contentOffset.x / itemWidth
@@ -296,8 +307,9 @@ public class GNImageCollection: UICollectionViewController, UICollectionViewDele
     
     
     override public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let selectedSubviewIndex = indexOfVisibleItem()
         for (i, subV) in imagesTrackerStack.arrangedSubviews.enumerated() {
-            if i == indexOfVisibleItem() {
+            if i == selectedSubviewIndex {
                 subV.backgroundColor = currentImageTrackerColor
             } else {
                 subV.backgroundColor = defaultImageTrackerColor

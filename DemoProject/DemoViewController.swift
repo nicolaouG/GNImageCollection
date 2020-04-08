@@ -59,7 +59,25 @@ class DemoViewController: UIViewController {
     @objc func goToImagesCVC(_ sender: UIButton) {
         let images: [UIImage] = [#imageLiteral(resourceName: "rickAndMorty"), #imageLiteral(resourceName: "dog"), #imageLiteral(resourceName: "united_portrait")]
         let cvc = GNImageCollection(images: images)
+
+        /// get the collectionView to add it as subview
+        /*
+        guard let cv = cvc.getCollectionView(self) else { return }
+        view.addSubview(cv)
+        cv.translatesAutoresizingMaskIntoConstraints = false
+        let t: NSLayoutConstraint
+        if #available(iOS 11.0, *) {
+            t = cv.topAnchor.constraint(equalTo: view.topAnchor, constant: view.safeAreaInsets.top)
+        } else {
+            t = cv.topAnchor.constraint(equalTo: view.topAnchor)
+        }
+        let l = cv.leftAnchor.constraint(equalTo: view.leftAnchor)
+        let r = cv.rightAnchor.constraint(equalTo: view.rightAnchor)
+        let h = cv.heightAnchor.constraint(equalToConstant: 250)
+        [t, l, r, h].forEach({ $0.isActive = true })
+        */
         
+        /// or show it as a controller
         if sender == pushButton {
             navigationController?.pushViewController(cvc, animated: true)
             cvc.title = "Collection"

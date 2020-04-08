@@ -22,6 +22,10 @@ You can have a look at the demo project for a simple use case.
 // let images: [UIImage]
 let imagesCollection = GNImageCollection(images: images)
 navigationController?.pushViewController(imagesCollection, animated: true)
+
 // or
 // present(imagesCollection, animated: true, completion: nil)
+
+// or just get the collectionView to add it as a subview anywhere
+// let cv = imagesCollection.getCollectionView(self)
 ```
