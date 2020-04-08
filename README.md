@@ -4,14 +4,14 @@
 
 Shows image(s) with zooming, saving and sharing capabilities
 
-![](imageCollection.gif)
+![](imagesCollection.gif)
 
 
 ## Getting started
 ```
 platform :ios, '10.0'
 
-pod 'GNImageProgressBar'
+pod 'GNImageCollection'
 ```
 
 ## How to use
@@ -19,8 +19,9 @@ pod 'GNImageProgressBar'
 You can have a look at the demo project for a simple use case.
 
 ```swift
+// let images: [UIImage]
 let imagesCollection = GNImageCollection(images: images)
 navigationController?.pushViewController(imagesCollection, animated: true)
 // or
-present(imagesCollection, animated: true, completion: nil)
+// present(imagesCollection, animated: true, completion: nil)
 ```
