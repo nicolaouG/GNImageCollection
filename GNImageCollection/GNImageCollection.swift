@@ -152,7 +152,7 @@ public class GNImageCollection: UICollectionViewController, UICollectionViewDele
     }
     
     public func getCollectionView(_ requestingController: UIViewController) -> UIView? {
-        flowLayout.itemSize = collectionCellSize()
+        closeButton.isHidden = true
         requestingController.addChild(self)
         didMove(toParent: requestingController)
         return view
