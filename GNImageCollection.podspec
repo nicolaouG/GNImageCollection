@@ -7,7 +7,7 @@ Pod::Spec.new do |spec|
   This library can be used to show a collection view of images where they can be zoomed, saved or shared.
                    DESC
   spec.homepage     = "https://github.com/nicolaouG/GNImageCollection"
-  spec.screenshots  = "https://raw.githubusercontent.com/nicolaouG/GNImageCollection/master/imagesCollection.gif"
+  spec.screenshots  = "https://raw.githubusercontent.com/nicolaouG/GNImageCollection/master/imagesCollection.mp4"
   spec.license      = { :type => "MIT", :file => "LICENSE" }
   spec.author       = { "george" => "georgios.nicolaou92@gmail.com" }
   spec.platform     = :ios
