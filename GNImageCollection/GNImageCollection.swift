@@ -11,6 +11,7 @@ import UIKit
 public class GNImageCollection: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     enum Identifiers: String {
         case cell = "ImageZoomCell"
+        case trackerCell = "TrackerCell"
         case removeAction = "Remove"
         case shareAction = "Share"
         case saveAction = "Save"
@@ -18,6 +19,12 @@ public class GNImageCollection: UICollectionViewController, UICollectionViewDele
         case alertErrorTitle = "Error"
         case alertOkAction = "OK"
         case alertCancelAction = "Cancel"
+    }
+    
+    public enum BottomImagesTrackerType {
+        case thumbnails
+        case dots
+        case none
     }
     
     public var images: [UIImage]? {
@@ -65,16 +72,7 @@ public class GNImageCollection: UICollectionViewController, UICollectionViewDele
         b.contentEdgeInsets = UIEdgeInsets(top: 4, left: 6, bottom: 4, right: 6)
         return b
     }()
-    
-    private lazy var imagesTrackerStack: UIStackView = {
-        let s = UIStackView()
-        s.alignment = .center
-        s.axis = .horizontal
-        s.distribution = .equalSpacing
-        s.spacing = trackerSize - 2
-        return s
-    }()
-    
+        
     private lazy var longPressGesture: UILongPressGestureRecognizer = {
         let g = UILongPressGestureRecognizer(target: self, action: #selector(longPressAction))
         return g
@@ -88,29 +86,48 @@ public class GNImageCollection: UICollectionViewController, UICollectionViewDele
         return l
     }()
     
+    private let bottomTrackerFlowLayout: UICollectionViewFlowLayout = {
+        let l = UICollectionViewFlowLayout()
+        l.scrollDirection = .horizontal
+        l.minimumInteritemSpacing = 10
+        l.minimumLineSpacing = 10
+        l.estimatedItemSize = CGSize(width: 1, height: 1)
+        return l
+    }()
+    
+    private lazy var bottomTrackerCollectionView: UICollectionView = {
+        let c = UICollectionView(frame: .zero, collectionViewLayout: bottomTrackerFlowLayout)
+        c.delegate = self
+        c.dataSource = self
+        c.allowsMultipleSelection = false
+        c.bounces = false
+        c.register(TrackerCollectionViewCell.self, forCellWithReuseIdentifier: Identifiers.trackerCell.rawValue)
+        return c
+    }()
+    
     public var currentImageTrackerColor: UIColor = .systemBlue {
         didSet {
-            recolorImageTracker()
+            bottomTrackerCollectionView.reloadSections(IndexSet(arrayLiteral: 0))
+            bottomTrackerCollectionView.scrollToItem(at: IndexPath(item: indexOfVisibleItem(), section: 0), at: .centeredHorizontally, animated: false)
         }
     }
     
     public var defaultImageTrackerColor: UIColor = .systemGray {
         didSet {
-            recolorImageTracker()
+            bottomTrackerCollectionView.reloadSections(IndexSet(arrayLiteral: 0))
+            bottomTrackerCollectionView.scrollToItem(at: IndexPath(item: indexOfVisibleItem(), section: 0), at: .centeredHorizontally, animated: false)
         }
     }
-    
-    public var shouldTrackImages: Bool = true {
-        didSet {
-            imagesTrackerStack.isHidden = !shouldTrackImages
-        }
-    }
-    
-    private let trackerSize: CGFloat = 8
+        
+    private var bottomImagesTrackerType: BottomImagesTrackerType
+    private var trackerCellHeight: CGFloat = 0
+    private var trackerCollectionViewWidth = NSLayoutConstraint()
     
         
-    public init(images: [UIImage]) {
+    public init(images: [UIImage], bottomImageTracker: BottomImagesTrackerType) {
         self.images = images
+        self.bottomImagesTrackerType = bottomImageTracker
+        
         super.init(collectionViewLayout: flowLayout)
         collectionView.isPagingEnabled = true
     }
@@ -125,6 +142,8 @@ public class GNImageCollection: UICollectionViewController, UICollectionViewDele
         collectionView.backgroundColor = backgroundColor
         collectionView.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: Identifiers.cell.rawValue)
         flowLayout.itemSize = collectionCellSize()
+        
+        setupTrackerCellSize()
         addImagesTracker()
         
         if #available(iOS 13.0, *) { }
@@ -151,6 +170,33 @@ public class GNImageCollection: UICollectionViewController, UICollectionViewDele
         }, completion: { _ in })
     }
     
+    public override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        setupNewTrackerCollectionViewWidth()
+    }
+    
+    private func setupNewTrackerCollectionViewWidth() {
+        let newWidth = bottomTrackerCollectionView.contentSize.width
+        let initialWidth = view.frame.width - 40
+        if newWidth < initialWidth {
+            trackerCollectionViewWidth.constant = bottomTrackerCollectionView.contentSize.width
+        } else {
+            trackerCollectionViewWidth.constant = initialWidth
+        }
+    }
+    
+    
+    private func setupTrackerCellSize() {
+        switch bottomImagesTrackerType {
+        case .dots:
+            trackerCellHeight = 8
+        case .thumbnails:
+            trackerCellHeight = 40
+        case .none:
+            trackerCellHeight = 0
+        }
+    }
+    
     public func getCollectionView(_ requestingController: UIViewController) -> UIView? {
         closeButton.isHidden = true
         requestingController.addChild(self)
@@ -169,76 +215,18 @@ public class GNImageCollection: UICollectionViewController, UICollectionViewDele
     }
     
     private func addImagesTracker() {
-        guard (images?.count ?? 0) > 1 else {
-            imagesTrackerStack.isHidden = true
-            return
-        }
-        
-        if !view.subviews.contains(imagesTrackerStack) {
-            view.addSubview(imagesTrackerStack)
+        if !view.subviews.contains(bottomTrackerCollectionView) && bottomImagesTrackerType != .none {
+            view.addSubview(bottomTrackerCollectionView)
+            
+            bottomTrackerCollectionView.translatesAutoresizingMaskIntoConstraints = false
+            trackerCollectionViewWidth = bottomTrackerCollectionView.widthAnchor.constraint(equalToConstant: view.frame.width - 40)
+            let h = bottomTrackerCollectionView.heightAnchor.constraint(equalToConstant: trackerCellHeight + 4)
+            let b = bottomTrackerCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20)
+            let cx = bottomTrackerCollectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            [trackerCollectionViewWidth, b, h, cx].forEach({ $0.isActive = true })
 
-            imagesTrackerStack.translatesAutoresizingMaskIntoConstraints = false
-            let w = imagesTrackerStack.widthAnchor.constraint(lessThanOrEqualTo: view.widthAnchor, constant: -40)
-            let h = imagesTrackerStack.heightAnchor.constraint(equalToConstant: 20)
-            let b = imagesTrackerStack.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20)
-            let cx = imagesTrackerStack.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-            [w, b, h, cx].forEach({ $0.isActive = true })
-
-            addBlurBackground(to: imagesTrackerStack)
+            addBlurBackground(to: bottomTrackerCollectionView)
         }
-        
-        setupStackArrangedSubviews()
-    }
-    
-    private func setupStackArrangedSubviews() {
-        let selectedSubviewIndex = indexOfVisibleItem()
-        let areTooManyImages = areTooManySubviews()
-        imagesTrackerStack.spacing = areTooManyImages ? trackerSize / 2 : trackerSize - 2
-        
-        /// clear and fill in the stack from scratch
-        imagesTrackerStack.arrangedSubviews.forEach({
-            $0.removeFromSuperview()
-        })
-        for _ in 0..<(images?.count ?? 0) {
-            let v = UIView()
-            if areTooManyImages {
-                v.heightAnchor.constraint(equalToConstant: trackerSize / 2).isActive = true
-                v.widthAnchor.constraint(equalToConstant: trackerSize / 2).isActive = true
-                v.layer.cornerRadius = trackerSize / 4
-            } else {
-                v.heightAnchor.constraint(equalToConstant: trackerSize).isActive = true
-                v.widthAnchor.constraint(equalToConstant: trackerSize).isActive = true
-                v.layer.cornerRadius = trackerSize / 2
-            }
-            v.backgroundColor = defaultImageTrackerColor
-            imagesTrackerStack.addArrangedSubview(v)
-        }
-        
-        /// color current image tracker
-        if imagesTrackerStack.arrangedSubviews.count > selectedSubviewIndex + 1 {
-            imagesTrackerStack.arrangedSubviews[selectedSubviewIndex].backgroundColor = currentImageTrackerColor
-        } else {
-            imagesTrackerStack.arrangedSubviews.last?.backgroundColor = currentImageTrackerColor
-        }
-    }
-    
-    private func recolorImageTracker() {
-        let selectedSubviewIndex = indexOfVisibleItem()
-        for (i, subV) in imagesTrackerStack.arrangedSubviews.enumerated() {
-            if i == selectedSubviewIndex {
-                subV.backgroundColor = currentImageTrackerColor
-            } else {
-                subV.backgroundColor = defaultImageTrackerColor
-            }
-        }
-
-    }
-    
-    private func areTooManySubviews() -> Bool {
-        let screenWidth = Int(view.bounds.width)
-        let numOfImages = images?.count ?? 0
-        let stackWidth = numOfImages * Int(trackerSize) + (numOfImages - 1) * Int(imagesTrackerStack.spacing)
-        return stackWidth > screenWidth - 40
     }
     
     private func addBlurBackground(to v: UIView) {
@@ -252,10 +240,16 @@ public class GNImageCollection: UICollectionViewController, UICollectionViewDele
         let blurEffect = UIBlurEffect(style: blurStyle)
         let effectView = UIVisualEffectView(effect: blurEffect)
         effectView.isUserInteractionEnabled = false
-        v.insertSubview(effectView, at: 0)
-
         effectView.layer.cornerRadius = 8
         effectView.clipsToBounds = true
+
+        if let cv = v as? UICollectionView {
+            cv.backgroundView = effectView
+            return 
+        } else {
+            v.insertSubview(effectView, at: 0)
+        }
+
         effectView.translatesAutoresizingMaskIntoConstraints = false
         let cx = effectView.centerYAnchor.constraint(equalTo: v.centerYAnchor)
         let cy = effectView.centerXAnchor.constraint(equalTo: v.centerXAnchor)
@@ -265,7 +259,11 @@ public class GNImageCollection: UICollectionViewController, UICollectionViewDele
     }
     
     @objc private func closeButtonClicked() {
-        dismiss(animated: true, completion: nil)
+        if let navController = navigationController {
+            navController.popViewController(animated: true)
+        } else {
+            dismiss(animated: true, completion: nil)
+        }
     }
     
     @objc private func longPressAction() {
@@ -307,47 +305,80 @@ public class GNImageCollection: UICollectionViewController, UICollectionViewDele
     
     
     override public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        let selectedSubviewIndex = indexOfVisibleItem()
-        for (i, subV) in imagesTrackerStack.arrangedSubviews.enumerated() {
-            if i == selectedSubviewIndex {
-                subV.backgroundColor = currentImageTrackerColor
-            } else {
-                subV.backgroundColor = defaultImageTrackerColor
-            }
-        }
+        guard scrollView == collectionView else { return }
+        recolorTrackerCollectionViewCells()
     }
 
     // MARK: UICollectionViewDataSource
 
     override public func numberOfSections(in collectionView: UICollectionView) -> Int {
-        if images == nil {
-            setEmptyMessage("Image not found")
-        } else if images?.count ?? 0 == 0 {
-            setEmptyMessage("No image to display")
+        if collectionView == bottomTrackerCollectionView {
+            return bottomImagesTrackerType == .none ? 0 : 1
+        } else {
+            if images == nil {
+                setEmptyMessage("Image not found")
+            } else if images?.count ?? 0 == 0 {
+                setEmptyMessage("No image to display")
+            }
+            return 1
         }
-        return 1
     }
 
 
     override public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return images?.count ?? 0
+        if collectionView == bottomTrackerCollectionView {
+            return bottomImagesTrackerType == .none ? 0 : images?.count ?? 0
+        } else {
+            return images?.count ?? 0
+        }
     }
 
     override public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        var cell = collectionView.dequeueReusableCell(withReuseIdentifier: Identifiers.cell.rawValue, for: indexPath) as? ImageCollectionViewCell
-        if cell == nil {
-            cell = ImageCollectionViewCell()
-        }
+        if collectionView == bottomTrackerCollectionView {
+            var cell = collectionView.dequeueReusableCell(withReuseIdentifier: Identifiers.trackerCell.rawValue, for: indexPath) as? TrackerCollectionViewCell
+            if cell == nil {
+                cell = TrackerCollectionViewCell()
+            }
 
-        if indexPath.item < images?.count ?? 0 {
-            cell?.image = images?[indexPath.item]
+            switch bottomImagesTrackerType {
+            case .dots:
+                cell?.imageView.backgroundColor = (indexPath.item == indexOfVisibleItem()) ? currentImageTrackerColor : defaultImageTrackerColor
+                cell?.imageView.layer.cornerRadius = trackerCellHeight / 2
+                
+            case .thumbnails:
+                if indexPath.item < images?.count ?? 0 {
+                    cell?.imageView.image = images?[indexPath.item]
+                }
+                cell?.imageView.layer.cornerRadius = 4
+                let isSelected = indexPath.item == indexOfVisibleItem()
+                cell?.imageView.layer.borderColor = isSelected ? currentImageTrackerColor.cgColor : UIColor.clear.cgColor
+                cell?.imageView.layer.borderWidth = isSelected ? 0.5 : 0
+                
+            case .none:
+                break
+            }
+            return cell ?? TrackerCollectionViewCell()
         }
-        return cell ?? ImageCollectionViewCell()
+            
+        else {
+            var cell = collectionView.dequeueReusableCell(withReuseIdentifier: Identifiers.cell.rawValue, for: indexPath) as? ImageCollectionViewCell
+            if cell == nil {
+                cell = ImageCollectionViewCell()
+            }
+            
+            if indexPath.item < images?.count ?? 0 {
+                cell?.image = images?[indexPath.item]
+            }
+            return cell ?? ImageCollectionViewCell()
+        }
     }
     
     override public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if let cell = cell as? ImageCollectionViewCell {
-            cell.zoomView.setZoomScale(1, animated: false)
+        if collectionView == bottomTrackerCollectionView { }
+        else {
+            if let cell = cell as? ImageCollectionViewCell {
+                cell.zoomView.setZoomScale(1, animated: false)
+            }
         }
     }
 
@@ -366,7 +397,12 @@ public class GNImageCollection: UICollectionViewController, UICollectionViewDele
     // MARK: FlowLayoutDelegate
         
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return collectionCellSize()
+        if collectionView == bottomTrackerCollectionView {
+            return CGSize(width: trackerCellHeight, height: trackerCellHeight)
+        }
+        else {
+            return collectionCellSize()
+        }
     }
     
     public func collectionCellSize() -> CGSize {
@@ -384,6 +420,28 @@ public class GNImageCollection: UICollectionViewController, UICollectionViewDele
         
         return CGSize(width: w, height: h)
     }
+    
+    
+    func recolorTrackerCollectionViewCells() {
+        let selectedSubviewIndex = indexOfVisibleItem()
+        bottomTrackerCollectionView.scrollToItem(at: IndexPath(item: selectedSubviewIndex, section: 0), at: .centeredHorizontally, animated: true)
+        
+        bottomTrackerCollectionView.visibleCells.forEach({
+            if let cell = $0 as? TrackerCollectionViewCell {
+                let isCurrentCell = (bottomTrackerCollectionView.indexPath(for: cell)?.item ?? -1) == selectedSubviewIndex
+
+                switch bottomImagesTrackerType {
+                case .dots:
+                    cell.imageView.backgroundColor = isCurrentCell ? currentImageTrackerColor : defaultImageTrackerColor
+                case .thumbnails:
+                    cell.imageView.layer.borderColor = isCurrentCell ? currentImageTrackerColor.cgColor : UIColor.clear.cgColor
+                    cell.imageView.layer.borderWidth = isCurrentCell ? 0.5 : 0
+                case .none:
+                    break
+                }
+            }
+        })
+    }
 }
 
 
@@ -393,6 +451,7 @@ public class GNImageCollection: UICollectionViewController, UICollectionViewDele
 extension GNImageCollection {
     @available(iOS 13.0, *)
     override public func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        guard collectionView != bottomTrackerCollectionView else { return nil }
         return contextMenu(for: indexPath)
     }
     
@@ -461,9 +520,50 @@ extension GNImageCollection {
         guard index < (images?.count ?? 0) else { return }
         images?.remove(at: index)
         collectionView.reloadData()
+        
+        UIView.animate(withDuration: 0.1, animations: {
+            self.bottomTrackerCollectionView.reloadSections(IndexSet(arrayLiteral: 0))
+            self.view.layoutIfNeeded()
+        }, completion: { _ in
+            self.setupNewTrackerCollectionViewWidth()
+            self.bottomTrackerCollectionView.scrollToItem(at: IndexPath(item: self.indexOfVisibleItem(), section: 0), at: .centeredHorizontally, animated: true)
+        })
     }
 }
 
+
+
+
+// MARK: - TrackerCollectionViewCell
+
+class TrackerCollectionViewCell: UICollectionViewCell {
+    lazy var imageView: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFit
+        iv.clipsToBounds = true
+        iv.translatesAutoresizingMaskIntoConstraints = false
+        return iv
+    }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupView()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setupView() {
+        addSubview(imageView)
+        
+        [imageView.leftAnchor.constraint(equalTo: leftAnchor),
+         imageView.rightAnchor.constraint(equalTo: rightAnchor),
+         imageView.topAnchor.constraint(equalTo: topAnchor),
+         imageView.bottomAnchor.constraint(equalTo: bottomAnchor)
+        ].forEach({ $0.isActive = true })
+    }
+}
 
 
 

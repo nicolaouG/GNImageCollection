@@ -77,11 +77,11 @@ class DemoViewController: UIViewController {
         let h_ = subviewButton.heightAnchor.constraint(equalToConstant: 50)
         [cx_, t_, h_, w_].forEach({ $0.isActive = true })
     }
-    
-    @objc func goToImagesCVC(_ sender: UIButton) {
-        let images: [UIImage] = [#imageLiteral(resourceName: "rickAndMorty"), #imageLiteral(resourceName: "dog"), #imageLiteral(resourceName: "united_portrait")]
-        let imagesCollection = GNImageCollection(images: images)
 
+    @objc func goToImagesCVC(_ sender: UIButton) {
+        let images: [UIImage] = [#imageLiteral(resourceName: "rickAndMorty"), #imageLiteral(resourceName: "dog"), #imageLiteral(resourceName: "united_portrait"), #imageLiteral(resourceName: "dog"), #imageLiteral(resourceName: "united_portrait"), #imageLiteral(resourceName: "dog"), #imageLiteral(resourceName: "united_portrait"), #imageLiteral(resourceName: "dog"), #imageLiteral(resourceName: "united_portrait"), #imageLiteral(resourceName: "dog"), #imageLiteral(resourceName: "united_portrait"), #imageLiteral(resourceName: "dog"), #imageLiteral(resourceName: "united_portrait"), #imageLiteral(resourceName: "dog"), #imageLiteral(resourceName: "united_portrait"), #imageLiteral(resourceName: "dog"), #imageLiteral(resourceName: "united_portrait"), #imageLiteral(resourceName: "dog"), #imageLiteral(resourceName: "united_portrait"), #imageLiteral(resourceName: "dog"), #imageLiteral(resourceName: "united_portrait"), #imageLiteral(resourceName: "dog"), #imageLiteral(resourceName: "united_portrait"), #imageLiteral(resourceName: "dog"), #imageLiteral(resourceName: "united_portrait")]
+        let imagesCollection = GNImageCollection(images: images, bottomImageTracker: .dots)
+        
         if sender == pushButton {
             navigationController?.pushViewController(imagesCollection, animated: true)
             imagesCollection.title = "Collection"
@@ -97,12 +97,22 @@ class DemoViewController: UIViewController {
     
     func addCollectionViewAsSubview(_ cv: UIView) {
         view.addSubview(cv)
+        cv.clipsToBounds = true
+        cv.contentMode = .scaleAspectFit
         cv.translatesAutoresizingMaskIntoConstraints = false
+//        let b = cv.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+//        let t = cv.topAnchor.constraint(equalTo: subviewButton.bottomAnchor, constant: 30)
+//        let l = cv.leftAnchor.constraint(equalTo: view.leftAnchor)
+//        let r = cv.rightAnchor.constraint(equalTo: view.rightAnchor)
+//        [b, l, r, t].forEach({ $0.isActive = true })
+        
         let b = cv.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         let t = cv.topAnchor.constraint(equalTo: subviewButton.bottomAnchor, constant: 30)
-        let l = cv.leftAnchor.constraint(equalTo: view.leftAnchor)
-        let r = cv.rightAnchor.constraint(equalTo: view.rightAnchor)
+        let l = cv.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        let r = cv.widthAnchor.constraint(equalToConstant: 200)
         [b, l, r, t].forEach({ $0.isActive = true })
+
+        
         cv.layoutIfNeeded()
     }
 }
