@@ -347,12 +347,12 @@ public class GNImageCollection: UICollectionViewController, UICollectionViewDele
                 
             case .thumbnails:
                 if indexPath.item < images?.count ?? 0 {
-                    cell?.imageView.image = images?[indexPath.item]
+                    cell?.imageView.image = images?[indexPath.item].resizedImageWithinRect(rectSize: CGSize(width: trackerCellHeight, height: trackerCellHeight))
                 }
                 cell?.imageView.layer.cornerRadius = 4
                 let isSelected = indexPath.item == indexOfVisibleItem()
                 cell?.imageView.layer.borderColor = isSelected ? currentImageTrackerColor.cgColor : UIColor.clear.cgColor
-                cell?.imageView.layer.borderWidth = isSelected ? 0.5 : 0
+                cell?.imageView.layer.borderWidth = isSelected ? 2 : 0
                 
             case .none:
                 break
@@ -385,12 +385,25 @@ public class GNImageCollection: UICollectionViewController, UICollectionViewDele
     // MARK: UICollectionViewDelegate
     
     override public func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
+        if collectionView == bottomTrackerCollectionView, bottomImagesTrackerType == .thumbnails {
+            return true
+        }
         return false
     }
     
-
     override public func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        if collectionView == bottomTrackerCollectionView, bottomImagesTrackerType == .thumbnails {
+            return true
+        }
         return false
+    }
+    
+    public override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView == bottomTrackerCollectionView, bottomImagesTrackerType == .thumbnails {
+            self.collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+            bottomTrackerCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+            recolorTrackerCollectionViewCells(at: indexPath.item)
+        }
     }
     
     
@@ -422,8 +435,14 @@ public class GNImageCollection: UICollectionViewController, UICollectionViewDele
     }
     
     
-    func recolorTrackerCollectionViewCells() {
-        let selectedSubviewIndex = indexOfVisibleItem()
+    func recolorTrackerCollectionViewCells(at index: Int = -1) {
+        let selectedSubviewIndex: Int
+        if index == -1 {
+            selectedSubviewIndex = indexOfVisibleItem()
+        } else {
+            selectedSubviewIndex = index
+        }
+        
         bottomTrackerCollectionView.scrollToItem(at: IndexPath(item: selectedSubviewIndex, section: 0), at: .centeredHorizontally, animated: true)
         
         bottomTrackerCollectionView.visibleCells.forEach({
@@ -435,7 +454,7 @@ public class GNImageCollection: UICollectionViewController, UICollectionViewDele
                     cell.imageView.backgroundColor = isCurrentCell ? currentImageTrackerColor : defaultImageTrackerColor
                 case .thumbnails:
                     cell.imageView.layer.borderColor = isCurrentCell ? currentImageTrackerColor.cgColor : UIColor.clear.cgColor
-                    cell.imageView.layer.borderWidth = isCurrentCell ? 0.5 : 0
+                    cell.imageView.layer.borderWidth = isCurrentCell ? 2 : 0
                 case .none:
                     break
                 }
@@ -720,7 +739,7 @@ class ImageZoomView: UIScrollView, UIScrollViewDelegate {
 
 // MARK: - Usefull extensions
 
-extension UIViewController {
+public extension UIViewController {
     public var isModal: Bool {
         let presentingIsModal = presentingViewController != nil
         let presentingIsNavigation = navigationController?.presentingViewController?.presentedViewController == navigationController
@@ -729,7 +748,7 @@ extension UIViewController {
     }
 }
 
-extension UIImageView {
+public extension UIImageView {
     /// Find the size of the image, once the parent imageView has been given a contentMode of .scaleAspectFit
     /// Querying the image.size returns the non-scaled size. This helper property is needed for accurate results.
     public var aspectFitSize: CGSize {
@@ -749,3 +768,28 @@ extension UIImageView {
     }
 }
 
+public extension UIImage {
+    func resizedImage(newSize: CGSize) -> UIImage {
+        guard self.size != newSize else { return self }
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0);
+        self.draw(in: CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height))
+        let newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        return newImage
+    }
+    
+    /*** Call this to prevent quality loss ***/
+    func resizedImageWithinRect(rectSize: CGSize) -> UIImage {
+        let widthFactor = size.width / rectSize.width
+        let heightFactor = size.height / rectSize.height
+        
+        var resizeFactor = widthFactor
+        if size.height > size.width {
+            resizeFactor = heightFactor
+        }
+        
+        let newSize = CGSize(width: size.width/resizeFactor, height: size.height/resizeFactor)
+        let resized = resizedImage(newSize: newSize)
+        return resized
+    }
+}

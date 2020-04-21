@@ -79,8 +79,8 @@ class DemoViewController: UIViewController {
     }
 
     @objc func goToImagesCVC(_ sender: UIButton) {
-        let images: [UIImage] = [#imageLiteral(resourceName: "rickAndMorty"), #imageLiteral(resourceName: "dog"), #imageLiteral(resourceName: "united_portrait"), #imageLiteral(resourceName: "dog"), #imageLiteral(resourceName: "united_portrait"), #imageLiteral(resourceName: "dog"), #imageLiteral(resourceName: "united_portrait"), #imageLiteral(resourceName: "dog"), #imageLiteral(resourceName: "united_portrait"), #imageLiteral(resourceName: "dog"), #imageLiteral(resourceName: "united_portrait"), #imageLiteral(resourceName: "dog"), #imageLiteral(resourceName: "united_portrait"), #imageLiteral(resourceName: "dog"), #imageLiteral(resourceName: "united_portrait"), #imageLiteral(resourceName: "dog"), #imageLiteral(resourceName: "united_portrait"), #imageLiteral(resourceName: "dog"), #imageLiteral(resourceName: "united_portrait"), #imageLiteral(resourceName: "dog"), #imageLiteral(resourceName: "united_portrait"), #imageLiteral(resourceName: "dog"), #imageLiteral(resourceName: "united_portrait"), #imageLiteral(resourceName: "dog"), #imageLiteral(resourceName: "united_portrait")]
-        let imagesCollection = GNImageCollection(images: images, bottomImageTracker: .dots)
+        let images: [UIImage] = [#imageLiteral(resourceName: "rickAndMorty"), #imageLiteral(resourceName: "dog"), #imageLiteral(resourceName: "united_portrait")]
+        let imagesCollection = GNImageCollection(images: images, bottomImageTracker: .thumbnails)
         
         if sender == pushButton {
             navigationController?.pushViewController(imagesCollection, animated: true)
