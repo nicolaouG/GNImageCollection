@@ -1,7 +1,7 @@
 Pod::Spec.new do |spec|
 
   spec.name         = "GNImageCollection"
-  spec.version      = "0.1.0"
+  spec.version      = "0.1.1"
   spec.summary      = "Shows image(s) with zooming, saving and sharing capabilities."
   spec.description  = <<-DESC
   This library can be used to show a collection view of images, either modally, in a navigation controller or as a subview, where they can be zoomed, saved or shared.

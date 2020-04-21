@@ -20,7 +20,7 @@ You can have a look at the demo project for a simple use case.
 
 ```swift
 // let images: [UIImage]
-let imagesCollection = GNImageCollection(images: images)
+let imagesCollection = GNImageCollection(images: images, bottomImageTracker: .dots) // .thumbnails or .none
 navigationController?.pushViewController(imagesCollection, animated: true)
 
 // or
