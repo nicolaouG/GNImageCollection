@@ -740,7 +740,7 @@ class ImageZoomView: UIScrollView, UIScrollViewDelegate {
 
 // MARK: - Usefull extensions
 
-public extension UIViewController {
+extension UIViewController {
     public var isModal: Bool {
         let presentingIsModal = presentingViewController != nil
         let presentingIsNavigation = navigationController?.presentingViewController?.presentedViewController == navigationController
@@ -749,7 +749,7 @@ public extension UIViewController {
     }
 }
 
-public extension UIImageView {
+extension UIImageView {
     /// Find the size of the image, once the parent imageView has been given a contentMode of .scaleAspectFit
     /// Querying the image.size returns the non-scaled size. This helper property is needed for accurate results.
     public var aspectFitSize: CGSize {
@@ -769,7 +769,7 @@ public extension UIImageView {
     }
 }
 
-public extension UIImage {
+extension UIImage {
     func resizedImage(newSize: CGSize) -> UIImage {
         guard self.size != newSize else { return self }
         UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0);
@@ -780,7 +780,7 @@ public extension UIImage {
     }
     
     /*** Call this to prevent quality loss ***/
-    func resizedImageWithinRect(rectSize: CGSize) -> UIImage {
+    public func resizedImageWithinRect(rectSize: CGSize) -> UIImage {
         let widthFactor = size.width / rectSize.width
         let heightFactor = size.height / rectSize.height
         
