@@ -436,6 +436,7 @@ public class GNImageCollection: UICollectionViewController, UICollectionViewDele
     
     
     func recolorTrackerCollectionViewCells(at index: Int = -1) {
+        guard  bottomImagesTrackerType != .none else { return }
         let selectedSubviewIndex: Int
         if index == -1 {
             selectedSubviewIndex = indexOfVisibleItem()
