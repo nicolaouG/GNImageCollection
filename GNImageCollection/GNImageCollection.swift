@@ -107,18 +107,18 @@ public class GNImageCollection: UICollectionViewController, UICollectionViewDele
     
     public var currentImageTrackerColor: UIColor = .systemBlue {
         didSet {
-            bottomTrackerCollectionView.reloadSections(IndexSet(arrayLiteral: 0))
-            bottomTrackerCollectionView.scrollToItem(at: IndexPath(item: indexOfVisibleItem(), section: 0), at: .centeredHorizontally, animated: false)
+            bottomTrackerCollectionView.reloadData()
+            bottomTrackerCollectionView.scrollToItem(at: IndexPath(item: self.indexOfVisibleItem(), section: 0), at: .centeredHorizontally, animated: true)
         }
     }
     
     public var defaultImageTrackerColor: UIColor = .systemGray {
         didSet {
-            bottomTrackerCollectionView.reloadSections(IndexSet(arrayLiteral: 0))
-            bottomTrackerCollectionView.scrollToItem(at: IndexPath(item: indexOfVisibleItem(), section: 0), at: .centeredHorizontally, animated: false)
+            bottomTrackerCollectionView.reloadData()
+            bottomTrackerCollectionView.scrollToItem(at: IndexPath(item: self.indexOfVisibleItem(), section: 0), at: .centeredHorizontally, animated: true)
         }
     }
-        
+    
     private var bottomImagesTrackerType: BottomImagesTrackerType
     private var trackerCellHeight: CGFloat = 0
     private var trackerCollectionViewWidth = NSLayoutConstraint()
