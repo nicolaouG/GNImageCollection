@@ -4,7 +4,7 @@
 
 Shows image(s) with zooming, saving and sharing capabilities
 
-![](imagesCollection.gif)
+![](imagesCollection.gif) ![](imagesCollection_thumbnail.png)
 
 
 ## Getting started
