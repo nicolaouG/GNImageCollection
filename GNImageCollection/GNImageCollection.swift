@@ -103,13 +103,13 @@ public class GNImageCollection: UICollectionViewController, UICollectionViewDele
         return l
     }()
     
-    private lazy var bottomTrackerCollectionView: UICollectionView = {
+    public lazy var bottomTrackerCollectionView: UICollectionView = {
         let c = UICollectionView(frame: .zero, collectionViewLayout: bottomTrackerFlowLayout)
         c.delegate = self
         c.dataSource = self
         c.allowsMultipleSelection = false
         c.bounces = false
-        c.register(TrackerCollectionViewCell.self, forCellWithReuseIdentifier: Identifiers.trackerCell.rawValue)
+        c.register(GNTrackerCollectionViewCell.self, forCellWithReuseIdentifier: Identifiers.trackerCell.rawValue)
         return c
     }()
     
@@ -157,7 +157,7 @@ public class GNImageCollection: UICollectionViewController, UICollectionViewDele
     override public func viewDidLoad() {
         super.viewDidLoad()
         collectionView.backgroundColor = backgroundColor
-        collectionView.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: Identifiers.cell.rawValue)
+        collectionView.register(GNImageCollectionViewCell.self, forCellWithReuseIdentifier: Identifiers.cell.rawValue)
         flowLayout.itemSize = collectionCellSize()
         
         setupTrackerCellSize()
@@ -182,8 +182,8 @@ public class GNImageCollection: UICollectionViewController, UICollectionViewDele
             self.flowLayout.invalidateLayout()
             let ip = IndexPath(item: index, section: 0)
             self.collectionView.scrollToItem(at: ip, at: .centeredHorizontally, animated: false)
-            ((self.collectionView.cellForItem(at: ip) as? ImageCollectionViewCell)?.zoomView)?.setupImageViewContentMode()
-            ((self.collectionView.cellForItem(at: ip) as? ImageCollectionViewCell)?.zoomView)?.setZoomScale(1, animated: false)
+            ((self.collectionView.cellForItem(at: ip) as? GNImageCollectionViewCell)?.zoomView)?.setupImageViewContentMode()
+            ((self.collectionView.cellForItem(at: ip) as? GNImageCollectionViewCell)?.zoomView)?.setZoomScale(1, animated: false)
         }, completion: { _ in })
     }
     
@@ -286,7 +286,7 @@ public class GNImageCollection: UICollectionViewController, UICollectionViewDele
     @objc private func longPressAction() {
         let index = indexOfVisibleItem()
         let indexPath = IndexPath(item: index, section: 0)
-        guard let cell = self.collectionView.cellForItem(at: indexPath) as? ImageCollectionViewCell,
+        guard let cell = self.collectionView.cellForItem(at: indexPath) as? GNImageCollectionViewCell,
             let image = cell.zoomView.imageView.image else { return }
 
         let alert = UIAlertController(title: "Options", message: nil, preferredStyle: .actionSheet)
@@ -374,9 +374,9 @@ public class GNImageCollection: UICollectionViewController, UICollectionViewDele
 
     override public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == bottomTrackerCollectionView {
-            var cell = collectionView.dequeueReusableCell(withReuseIdentifier: Identifiers.trackerCell.rawValue, for: indexPath) as? TrackerCollectionViewCell
+            var cell = collectionView.dequeueReusableCell(withReuseIdentifier: Identifiers.trackerCell.rawValue, for: indexPath) as? GNTrackerCollectionViewCell
             if cell == nil {
-                cell = TrackerCollectionViewCell()
+                cell = GNTrackerCollectionViewCell()
             }
 
             switch bottomImagesTrackerType {
@@ -402,13 +402,13 @@ public class GNImageCollection: UICollectionViewController, UICollectionViewDele
             case .none:
                 break
             }
-            return cell ?? TrackerCollectionViewCell()
+            return cell ?? GNTrackerCollectionViewCell()
         }
             
         else {
-            var cell = collectionView.dequeueReusableCell(withReuseIdentifier: Identifiers.cell.rawValue, for: indexPath) as? ImageCollectionViewCell
+            var cell = collectionView.dequeueReusableCell(withReuseIdentifier: Identifiers.cell.rawValue, for: indexPath) as? GNImageCollectionViewCell
             if cell == nil {
-                cell = ImageCollectionViewCell()
+                cell = GNImageCollectionViewCell()
             }
             
             if let links = urlStrings, indexPath.item < links.count {
@@ -419,14 +419,14 @@ public class GNImageCollection: UICollectionViewController, UICollectionViewDele
                     cell?.image = images?[indexPath.item]
                 }
             }
-            return cell ?? ImageCollectionViewCell()
+            return cell ?? GNImageCollectionViewCell()
         }
     }
     
     override public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if collectionView == bottomTrackerCollectionView { }
         else {
-            if let cell = cell as? ImageCollectionViewCell {
+            if let cell = cell as? GNImageCollectionViewCell {
                 cell.zoomView.setZoomScale(1, animated: false)
             }
         }
@@ -497,7 +497,7 @@ public class GNImageCollection: UICollectionViewController, UICollectionViewDele
         bottomTrackerCollectionView.scrollToItem(at: IndexPath(item: selectedSubviewIndex, section: 0), at: .centeredHorizontally, animated: true)
         
         bottomTrackerCollectionView.visibleCells.forEach({
-            if let cell = $0 as? TrackerCollectionViewCell {
+            if let cell = $0 as? GNTrackerCollectionViewCell {
                 let isCurrentCell = (bottomTrackerCollectionView.indexPath(for: cell)?.item ?? -1) == selectedSubviewIndex
 
                 switch bottomImagesTrackerType {
@@ -530,7 +530,7 @@ extension GNImageCollection {
         let configuration = UIContextMenuConfiguration(identifier: "\(indexPath.item)" as NSCopying, previewProvider: {
             return self.contextMenuPreviewVC(for: indexPath)
         }, actionProvider: { _ in
-            guard let cell = self.collectionView.cellForItem(at: indexPath) as? ImageCollectionViewCell,
+            guard let cell = self.collectionView.cellForItem(at: indexPath) as? GNImageCollectionViewCell,
                 let image = cell.zoomView.imageView.image else { return nil }
 
             let save = UIAction(title: Identifiers.saveAction.rawValue, image: UIImage(systemName: "tray.and.arrow.down"), identifier: UIAction.Identifier(rawValue: Identifiers.saveAction.rawValue)) { _ in
@@ -549,7 +549,7 @@ extension GNImageCollection {
     }
     
     private func contextMenuPreviewVC(for indexPath: IndexPath) -> UIViewController? {
-        guard let cell = collectionView.cellForItem(at: indexPath) as? ImageCollectionViewCell else { return nil }
+        guard let cell = collectionView.cellForItem(at: indexPath) as? GNImageCollectionViewCell else { return nil }
         let vc = UIViewController()
         let iv = UIImageView()
         let maxWidth = UIDevice.current.userInterfaceIdiom == .pad ? UIScreen.main.bounds.width * 0.5 : UIScreen.main.bounds.width * 0.8
@@ -616,8 +616,8 @@ extension GNImageCollection {
 
 // MARK: - TrackerCollectionViewCell
 
-class TrackerCollectionViewCell: UICollectionViewCell {
-    lazy var imageView: UIImageView = {
+public class GNTrackerCollectionViewCell: UICollectionViewCell {
+    public lazy var imageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFit
         iv.clipsToBounds = true
@@ -649,14 +649,14 @@ class TrackerCollectionViewCell: UICollectionViewCell {
 
 // MARK: - ImageCollectionViewCell
 
-class ImageCollectionViewCell: UICollectionViewCell {
+public class GNImageCollectionViewCell: UICollectionViewCell {
     lazy var zoomView: ImageZoomView = {
         let iv = ImageZoomView()
         iv.contentMode = .scaleAspectFit
         return iv
     }()
     
-    var image: UIImage? {
+    public var image: UIImage? {
         didSet {
             if let img = image {
                 zoomView.image = img
@@ -677,7 +677,7 @@ class ImageCollectionViewCell: UICollectionViewCell {
     }
 
     
-    override func prepareForReuse() {
+    override public func prepareForReuse() {
         super.prepareForReuse()
         zoomView.setZoomScale(1, animated: false)
     }

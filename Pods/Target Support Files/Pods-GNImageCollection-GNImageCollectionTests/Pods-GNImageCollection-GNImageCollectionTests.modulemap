@@ -1,0 +1,6 @@
+framework module Pods_GNImageCollection_GNImageCollectionTests {
+  umbrella header "Pods-GNImageCollection-GNImageCollectionTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
