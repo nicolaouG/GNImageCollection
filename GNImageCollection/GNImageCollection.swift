@@ -33,6 +33,14 @@ public class GNImageCollection: UICollectionViewController, UICollectionViewDele
         }
     }
     
+    public var urlStrings: [String]? {
+        didSet {
+            addImagesTracker()
+        }
+    }
+    
+    public var imagePlaceholder: UIImage?
+
     private var textColor: UIColor {
         get {
             if #available(iOS 13.0, *) {
@@ -126,6 +134,15 @@ public class GNImageCollection: UICollectionViewController, UICollectionViewDele
         
     public init(images: [UIImage], bottomImageTracker: BottomImagesTrackerType) {
         self.images = images
+        self.bottomImagesTrackerType = bottomImageTracker
+        
+        super.init(collectionViewLayout: flowLayout)
+        collectionView.isPagingEnabled = true
+    }
+    
+    public init(urlStrings: [String], imagePlaceholder: UIImage = UIImage(), bottomImageTracker: BottomImagesTrackerType) {
+        self.urlStrings = urlStrings
+        self.imagePlaceholder = imagePlaceholder
         self.bottomImagesTrackerType = bottomImageTracker
         
         super.init(collectionViewLayout: flowLayout)
@@ -315,22 +332,44 @@ public class GNImageCollection: UICollectionViewController, UICollectionViewDele
         if collectionView == bottomTrackerCollectionView {
             return bottomImagesTrackerType == .none ? 0 : 1
         } else {
-            if images == nil {
+            if let imgs = images {
+                if imgs.isEmpty {
+                    setEmptyMessage("No image to display")
+                }
+            } else if let strs = urlStrings {
+                if strs.isEmpty {
+                    setEmptyMessage("No image to display")
+                }
+            } else {
                 setEmptyMessage("Image not found")
-            } else if images?.count ?? 0 == 0 {
-                setEmptyMessage("No image to display")
             }
+            
             return 1
+            
+//            if images == nil {
+//                setEmptyMessage("Image not found")
+//            } else if images?.count ?? 0 == 0 {
+//                setEmptyMessage("No image to display")
+//            }
+//            return 1
         }
     }
 
 
     override public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView == bottomTrackerCollectionView {
-            return bottomImagesTrackerType == .none ? 0 : images?.count ?? 0
+        if let imgs = images {
+            return imgs.count
+        } else if let strs = urlStrings {
+            return strs.count
         } else {
-            return images?.count ?? 0
+            return 0
         }
+
+//        if collectionView == bottomTrackerCollectionView {
+//            return bottomImagesTrackerType == .none ? 0 : images?.count ?? 0
+//        } else {
+//            return images?.count ?? 0
+//        }
     }
 
     override public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -346,8 +385,14 @@ public class GNImageCollection: UICollectionViewController, UICollectionViewDele
                 cell?.imageView.layer.cornerRadius = trackerCellHeight / 2
                 
             case .thumbnails:
-                if indexPath.item < images?.count ?? 0 {
-                    cell?.imageView.image = images?[indexPath.item].resizedImageWithinRect(rectSize: CGSize(width: trackerCellHeight, height: trackerCellHeight))
+                if let links = urlStrings, indexPath.item < links.count {
+                    cell?.imageView.download(from: links[indexPath.item], placeholder: imagePlaceholder?.resizedImageWithinRect(rectSize: CGSize(width: trackerCellHeight, height: trackerCellHeight)), onSuccess: { _ in
+                        cell?.imageView.image = cell?.imageView.image?.resizedImageWithinRect(rectSize: CGSize(width: self.trackerCellHeight, height: self.trackerCellHeight))
+                    })
+                } else {
+                    if indexPath.item < images?.count ?? 0 {
+                        cell?.imageView.image = images?[indexPath.item].resizedImageWithinRect(rectSize: CGSize(width: trackerCellHeight, height: trackerCellHeight))
+                    }
                 }
                 cell?.imageView.layer.cornerRadius = 4
                 let isSelected = indexPath.item == indexOfVisibleItem()
@@ -366,8 +411,13 @@ public class GNImageCollection: UICollectionViewController, UICollectionViewDele
                 cell = ImageCollectionViewCell()
             }
             
-            if indexPath.item < images?.count ?? 0 {
-                cell?.image = images?[indexPath.item]
+            if let links = urlStrings, indexPath.item < links.count {
+                cell?.placeholder = imagePlaceholder
+                cell?.link = links[indexPath.item]
+            } else {
+                if indexPath.item < images?.count ?? 0 {
+                    cell?.image = images?[indexPath.item]
+                }
             }
             return cell ?? ImageCollectionViewCell()
         }
@@ -537,9 +587,19 @@ extension GNImageCollection {
     }
     
     private func removeAction(_ index: Int) {
-        guard index < (images?.count ?? 0) else { return }
-        images?.remove(at: index)
-        collectionView.reloadData()
+        guard index < (images?.count ?? 0) || index < (urlStrings?.count ?? 0) else { return }
+        
+        if let imgs = images, index < imgs.count {
+            images?.remove(at: index)
+            collectionView.reloadData()
+        } else if let links = urlStrings, index < links.count {
+            urlStrings?.remove(at: index)
+            collectionView.reloadData()
+        }
+        
+//        guard index < (images?.count ?? 0) else { return }
+//        images?.remove(at: index)
+//        collectionView.reloadData()
         
         UIView.animate(withDuration: 0.1, animations: {
             self.bottomTrackerCollectionView.reloadSections(IndexSet(arrayLiteral: 0))
@@ -603,6 +663,19 @@ class ImageCollectionViewCell: UICollectionViewCell {
             }
         }
     }
+    
+    var placeholder: UIImage?
+    
+    var link: String? {
+        didSet {
+            if let link = link {
+                zoomView.imageView.download(from: link, placeholder: placeholder, onSuccess: { _ in
+                    self.zoomView.setupImageViewContentMode()
+                })
+            }
+        }
+    }
+
     
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -668,6 +741,7 @@ class ImageZoomView: UIScrollView, UIScrollViewDelegate {
     
     func setupImageViewContentMode() {
         layoutIfNeeded()
+        let image = self.image ?? imageView.image /// in case of assigning link as image
         if (image?.size.width ?? 0) >= bounds.width || (image?.size.height ?? 0) >= bounds.height {
             imageView.contentMode = .scaleAspectFit
         } else {
@@ -738,6 +812,8 @@ class ImageZoomView: UIScrollView, UIScrollViewDelegate {
 
 
 
+
+
 // MARK: - Usefull extensions
 
 extension UIViewController {
@@ -767,6 +843,44 @@ extension UIImageView {
 
         return aspectFitSize
     }
+    
+        
+    public func download(from link: String, placeholder: UIImage?, onSuccess: /*@escaping */((_ image: UIImage) -> Void)? = nil) {
+        self.image = placeholder
+        self.contentMode = .scaleAspectFit
+        guard let url = URL(string: link) else { return }
+        
+        /// check if cached
+        if let cachedImage = ImageCache.shared.image(forKey: link) {
+            self.image = cachedImage
+            onSuccess?(cachedImage)
+            return
+        }
+        
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            if let err = error {
+                print(err)
+                return
+            }
+            
+            guard
+                ///let httpURLResponse = response as? HTTPURLResponse,
+                ///httpURLResponse.statusCode == 200,
+                let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
+                let data = data,
+                let image = UIImage(data: data)
+                else {
+                    print("Invalid image URL.")
+                    return
+            }
+            
+            DispatchQueue.main.async() { [weak self] in
+                self?.image = image
+                ImageCache.shared.save(image: image, forKey: link)
+                onSuccess?(image)
+            }
+        }.resume()
+    }
 }
 
 extension UIImage {
@@ -792,5 +906,39 @@ extension UIImage {
         let newSize = CGSize(width: size.width/resizeFactor, height: size.height/resizeFactor)
         let resized = resizedImage(newSize: newSize)
         return resized
+    }
+}
+
+
+
+
+
+
+
+// MARK: - ImageCache
+
+class ImageCache {
+    private let cache = NSCache<NSString, UIImage>()
+    private var observer: NSObjectProtocol!
+
+    static let shared = ImageCache()
+
+    private init() {
+        /// purge cache on memory pressure
+        observer = NotificationCenter.default.addObserver(forName: UIApplication.didReceiveMemoryWarningNotification, object: nil, queue: nil) { [weak self] notification in
+            self?.cache.removeAllObjects()
+        }
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(observer!)
+    }
+
+    func image(forKey key: String) -> UIImage? {
+        return cache.object(forKey: key as NSString)
+    }
+
+    func save(image: UIImage, forKey key: String) {
+        cache.setObject(image, forKey: key as NSString)
     }
 }

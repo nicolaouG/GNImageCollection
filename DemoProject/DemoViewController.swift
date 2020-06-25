@@ -79,8 +79,12 @@ class DemoViewController: UIViewController {
     }
 
     @objc func goToImagesCVC(_ sender: UIButton) {
+//        let urlStrings = ["https://picsum.photos/id/238/400/300", "https://picsum.photos/id/237/350/600", "https://picsum.photos/seed/picsum/500/300", "https://picsum.photos/id/236/350/600", "https://picsum.photos/id/235/350/600", "https://picsum.photos/id/234/350/600", "https://picsum.photos/id/233/350/600"]
+//        let imagesCollection = GNImageCollection(urlStrings: urlStrings, imagePlaceholder: #imageLiteral(resourceName: "placeholder"), bottomImageTracker: .thumbnails) /// .dots or .none
+
         let images: [UIImage] = [#imageLiteral(resourceName: "rickAndMorty"), #imageLiteral(resourceName: "dog"), #imageLiteral(resourceName: "united_portrait")]
-        let imagesCollection = GNImageCollection(images: images, bottomImageTracker: .dots) // .thumbnails or .none
+        let imagesCollection = GNImageCollection(images: images, bottomImageTracker: .thumbnails) /// .dots or .none
+        
         imagesCollection.defaultImageTrackerColor = .red
         imagesCollection.currentImageTrackerColor = .green
         
@@ -102,19 +106,13 @@ class DemoViewController: UIViewController {
         cv.clipsToBounds = true
         cv.contentMode = .scaleAspectFit
         cv.translatesAutoresizingMaskIntoConstraints = false
-//        let b = cv.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-//        let t = cv.topAnchor.constraint(equalTo: subviewButton.bottomAnchor, constant: 30)
-//        let l = cv.leftAnchor.constraint(equalTo: view.leftAnchor)
-//        let r = cv.rightAnchor.constraint(equalTo: view.rightAnchor)
-//        [b, l, r, t].forEach({ $0.isActive = true })
         
         let b = cv.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         let t = cv.topAnchor.constraint(equalTo: subviewButton.bottomAnchor, constant: 30)
         let l = cv.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         let r = cv.widthAnchor.constraint(equalToConstant: 200)
         [b, l, r, t].forEach({ $0.isActive = true })
-
         
-        cv.layoutIfNeeded()
+//        cv.layoutIfNeeded()
     }
 }
