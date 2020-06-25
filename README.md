@@ -29,3 +29,9 @@ navigationController?.pushViewController(imagesCollection, animated: true)
 // or just get the collectionView to add it as a subview anywhere
 // let cv = imagesCollection.getCollectionView(self)
 ```
+
+```swift
+// you can initialize the collection with images from url as well
+let urlStrings = ["https://picsum.photos/id/238/400/300", "https://picsum.photos/id/237/350/600", "https://picsum.photos/seed/picsum/500/300"]
+let imagesCollection = GNImageCollection(urlStrings: urlStrings, imagePlaceholder: #imageLiteral(resourceName: "placeholder"), bottomImageTracker: .thumbnails)
+```
